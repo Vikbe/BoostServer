@@ -28,10 +28,20 @@ namespace repo {
 		// Create the query and print it out
 		std::ostringstream oss;
 
-		oss << "SELECT * FROM Posts WHERE Date LIKE '" << search.Date << "%' AND ExternalId LIKE '" << search.Id
-			<< "%' AND Number LIKE '" << search.Number << "%' AND Constant LIKE '" << search.Constant << "%' AND Digits LIKE '"
-			<< search.Digits << "%' AND Decimals LIKE '" << search.Decimals << "%';";
-
+		// Cast constant to float so you can search with decimals in the constant search field
+		if (search.Constant != "")
+		{
+			oss << "SELECT * FROM Posts WHERE Date LIKE '" << search.Date << "%' AND ExternalId LIKE '" << search.Id
+				<< "%' AND Number LIKE '" << search.Number << "%' AND Constant LIKE '" << stof(search.Constant) << "%' AND Digits LIKE '"
+				<< search.Digits << "%' AND Decimals LIKE '" << search.Decimals << "%';";
+		} 
+		else
+		{
+			oss << "SELECT * FROM Posts WHERE Date LIKE '" << search.Date << "%' AND ExternalId LIKE '" << search.Id
+				<< "%' AND Number LIKE '" << search.Number << "%' AND Constant LIKE '" << search.Constant << "%' AND Digits LIKE '"
+				<< search.Digits << "%' AND Decimals LIKE '" << search.Decimals << "%';";
+		}
+		
 		std::string query = oss.str();
 		std::cout << query << std::endl;
 
