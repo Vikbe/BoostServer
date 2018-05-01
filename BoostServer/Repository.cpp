@@ -7,18 +7,13 @@ namespace repo {
 
 	Repository::Repository()
 	{
-		try
+	
+		if (!boost::filesystem::exists("data.db"))
 		{
-			if (!boost::filesystem::exists("data.db"))
-			{
-				// Parse the CSV file and upload to DB
-				csvreader::CsvReader();
-			}
+			// Parse the CSV file and upload to DB
+			csvreader::CsvReader();
 		}
-		catch (Exception const & e)
-		{
-			std::cerr << e.Message << " " << e.Result;
-		}
+		
 	}
 
 	QueryData Repository::Search(SearchModel search)
